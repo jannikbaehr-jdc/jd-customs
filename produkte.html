@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produkte – JD Customs</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">JD<span>Customs</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="produkte.html" class="active">Produkte</a></li>
+        <li><a href="ueber-uns.html">Über uns</a></li>
+        <li><a href="index.html#kontakt">Kontakt</a></li>
+      </ul>
+      <a href="index.html#kontakt" class="btn-primary nav-cta">Anfrage stellen</a>
+    </nav>
+  </header>
+
+  <!-- PAGE -->
+  <main class="produkte-page">
+
+    <div class="section-label">Sortiment</div>
+    <h1 class="section-title">Unsere Kessel</h1>
+    <p class="section-sub">Alle Kessel sind als Maßanfertigung erhältlich. Größe, Tiefe, Holzart und Finish nach deinen Wünschen.</p>
+
+    <!-- FILTER -->
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterAll(this)">Alle</button>
+      <button class="filter-btn" onclick="filterAll(this)">Snare</button>
+      <button class="filter-btn" onclick="filterAll(this)">Tom</button>
+      <button class="filter-btn" onclick="filterAll(this)">Bass Drum</button>
+      <button class="filter-btn" onclick="filterAll(this)">Custom</button>
+    </div>
+
+    <!-- MAPLE -->
+    <div class="produkt-card-lg">
+      <div class="produkt-visual maple">
+        <span class="produkt-badge">Bestseller</span>
+      </div>
+      <div class="produkt-detail">
+        <div>
+          <p class="produkt-holz">Ahorn · Maple</p>
+          <h3>Maple Shell</h3>
+          <p class="produkt-desc">
+            Ahorn ist das Allround-Genie unter den Schlagzeughölzern. Warme, volle Mitten, ausgeglichener Frequenzgang und ein natürlicher Sustain machen ihn zur ersten Wahl für Live und Studio. Ob Snare, Tom oder Bassdrum – Maple klingt immer.
+          </p>
+          <div class="produkt-specs">
+            <div class="spec">
+              <span class="spec-label">Verfügbare Größen</span>
+              <span class="spec-val">10" – 22"</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Tiefe</span>
+              <span class="spec-val">Nach Wahl</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Lagen</span>
+              <span class="spec-val">6 oder 8</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Finish</span>
+              <span class="spec-val">Natural, Wrap, Lack</span>
+            </div>
+          </div>
+        </div>
+        <div class="produkt-action">
+          <span class="preis-lg">ab 149 €</span>
+          <a href="index.html#kontakt" class="btn-primary">Jetzt anfragen →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- BIRCH -->
+    <div class="produkt-card-lg">
+      <div class="produkt-visual birch">
+        <span class="produkt-badge">Neu</span>
+      </div>
+      <div class="produkt-detail">
+        <div>
+          <p class="produkt-holz">Birke · Birch</p>
+          <h3>Birch Shell</h3>
+          <p class="produkt-desc">
+            Birke ist die Wahl für Schlagzeuger, die Projektion und Attack suchen. Mit betonten Höhen und Tiefen bei reduzierten Mitten schneidet Birke perfekt durch jeden Mix. Ideal für laute Bands, Studioproduktionen und alles was nach vorne will.
+          </p>
+          <div class="produkt-specs">
+            <div class="spec">
+              <span class="spec-label">Verfügbare Größen</span>
+              <span class="spec-val">10" – 22"</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Tiefe</span>
+              <span class="spec-val">Nach Wahl</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Lagen</span>
+              <span class="spec-val">6 oder 8</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Finish</span>
+              <span class="spec-val">Natural, Wrap, Lack</span>
+            </div>
+          </div>
+        </div>
+        <div class="produkt-action">
+          <span class="preis-lg">ab 139 €</span>
+          <a href="index.html#kontakt" class="btn-primary">Jetzt anfragen →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAHAGONI -->
+    <div class="produkt-card-lg">
+      <div class="produkt-visual mahagoni"></div>
+      <div class="produkt-detail">
+        <div>
+          <p class="produkt-holz">Mahagoni · Mahogany</p>
+          <h3>Mahagoni Shell</h3>
+          <p class="produkt-desc">
+            Mahagoni bringt warme, tiefe Frequenzen und einen weichen, rundlichen Attack. Der charakteristische Vintage-Sound macht dieses Holz besonders für Jazz, Blues und Soul interessant – aber auch für alle, die einen erdigen, warmen Klang suchen.
+          </p>
+          <div class="produkt-specs">
+            <div class="spec">
+              <span class="spec-label">Verfügbare Größen</span>
+              <span class="spec-val">12" – 22"</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Tiefe</span>
+              <span class="spec-val">Nach Wahl</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Lagen</span>
+              <span class="spec-val">6</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Finish</span>
+              <span class="spec-val">Natural, Wrap, Lack</span>
+            </div>
+          </div>
+        </div>
+        <div class="produkt-action">
+          <span class="preis-lg">ab 159 €</span>
+          <a href="index.html#kontakt" class="btn-primary">Jetzt anfragen →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- WALNUT -->
+    <div class="produkt-card-lg">
+      <div class="produkt-visual walnut"></div>
+      <div class="produkt-detail">
+        <div>
+          <p class="produkt-holz">Walnuss · Walnut</p>
+          <h3>Walnut Shell</h3>
+          <p class="produkt-desc">
+            Walnuss verbindet das Beste aus zwei Welten: die Wärme von Mahagoni mit der Durchsetzungskraft von Maple. Dunkler Klang, starke Mitten, ausgeprägter Sustain. Optisch ein Hingucker – klanglich eine Ansage.
+          </p>
+          <div class="produkt-specs">
+            <div class="spec">
+              <span class="spec-label">Verfügbare Größen</span>
+              <span class="spec-val">10" – 20"</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Tiefe</span>
+              <span class="spec-val">Nach Wahl</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Lagen</span>
+              <span class="spec-val">6</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Finish</span>
+              <span class="spec-val">Natural, Öl, Lack</span>
+            </div>
+          </div>
+        </div>
+        <div class="produkt-action">
+          <span class="preis-lg">ab 179 €</span>
+          <a href="index.html#kontakt" class="btn-primary">Jetzt anfragen →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTOM -->
+    <div class="produkt-card-lg">
+      <div class="produkt-visual custom">
+        <span class="produkt-badge">Premium</span>
+      </div>
+      <div class="produkt-detail">
+        <div>
+          <p class="produkt-holz">Dein Wunschholz · Custom</p>
+          <h3>Custom Build</h3>
+          <p class="produkt-desc">
+            Du hast eine genaue Vorstellung – oder du weißt noch nicht ganz, was du willst. Beides ist perfekt. Wir beraten dich, finden gemeinsam das richtige Holz, die richtige Größe und das passende Finish. Dein Kessel, deine Regeln.
+          </p>
+          <div class="produkt-specs">
+            <div class="spec">
+              <span class="spec-label">Holzart</span>
+              <span class="spec-val">Frei wählbar</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Größe</span>
+              <span class="spec-val">Beliebig</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Lagen</span>
+              <span class="spec-val">Nach Wunsch</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Finish</span>
+              <span class="spec-val">Alles möglich</span>
+            </div>
+          </div>
+        </div>
+        <div class="produkt-action">
+          <span class="preis-lg">Auf Anfrage</span>
+          <a href="index.html#kontakt" class="btn-primary">Jetzt anfragen →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- HINWEIS -->
+    <div style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; margin-top: 2rem; display:flex; gap:1.5rem; align-items:flex-start;">
+      <div style="font-size:1.5rem; flex-shrink:0;">💡</div>
+      <div>
+        <h4 style="font-family: var(--font-h); font-weight:700; margin-bottom:0.5rem;">Alle Preise sind Richtwerte</h4>
+        <p style="font-size:0.88rem; color: var(--muted);">
+          Der finale Preis hängt von Größe, Holzart, Finish und Ausstattung ab. Schreib uns deine Wunschkonfiguration – wir erstellen dir ein kostenloses, unverbindliches Angebot.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">JD<span>Customs</span></a>
+        <p>Handgefertigte Schlagzeugkessel<br />aus dem Schwarzwald</p>
+      </div>
+      <div class="footer-nav">
+        <h4>Seiten</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="produkte.html">Produkte</a></li>
+          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="index.html#kontakt">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav">
+        <h4>Rechtliches</h4>
+        <ul>
+          <li><a href="#">Impressum</a></li>
+          <li><a href="#">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 JD Customs · Alle Rechte vorbehalten</span>
+      <span>Made with ♥ im Schwarzwald</span>
+    </div>
+  </footer>
+
+  <script>
+    function filterAll(btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
