@@ -145,10 +145,15 @@ body {
 
 /* ── HERO ── */
 .hero {
-  padding: 130px 2.5rem 80px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 2.5rem 80px;
+  text-align: center;
   max-width: 860px;
   margin: 0 auto;
-  text-align: center;
 }
 
 .hero-tag {
