@@ -1,0 +1,383 @@
+/* ===========================
+   JD Customs – Stylesheet
+   =========================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --black:   #0a0a0a;
+  --dark:    #111111;
+  --card:    #1a1a1a;
+  --border:  #2a2a2a;
+  --gold:    #c9a84c;
+  --gold2:   #e8c76a;
+  --white:   #f5f5f5;
+  --gray:    #888888;
+  --font-head: 'Bebas Neue', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(10,10,10,0.95);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+.logo {
+  font-family: var(--font-head);
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  color: var(--white);
+}
+.logo span { color: var(--gold); }
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--gray);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+.btn-nav {
+  background: var(--gold);
+  color: var(--black);
+  padding: 0.5rem 1.2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+.btn-nav:hover { background: var(--gold2); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 8rem 2rem 4rem;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    var(--black);
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-family: var(--font-head);
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  line-height: 1;
+  letter-spacing: 3px;
+  margin-bottom: 1.5rem;
+}
+.hero-content h1 span { color: var(--gold); }
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: var(--gray);
+  max-width: 540px;
+  margin: 0 auto 2.5rem;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--black);
+  padding: 0.85rem 2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  margin-right: 1rem;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn-primary:hover { background: var(--gold2); transform: translateY(-1px); }
+
+.btn-secondary {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 0.85rem 2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-secondary:hover { background: var(--gold); color: var(--black); }
+
+.hero-badge {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* ── FEATURES ── */
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 4rem 2rem;
+  background: var(--dark);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.feature {
+  text-align: center;
+  max-width: 220px;
+}
+.feature-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+.feature h3 {
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  color: var(--gold);
+}
+.feature p { font-size: 0.88rem; color: var(--gray); }
+
+/* ── PRODUKTE ── */
+.produkte {
+  padding: 5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-family: var(--font-head);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.section-subtitle {
+  text-align: center;
+  color: var(--gray);
+  font-size: 0.95rem;
+  margin-bottom: 3rem;
+}
+
+.produkte-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.produkt-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.produkt-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+}
+
+.produkt-img {
+  height: 180px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding: 0.75rem;
+}
+
+.maple    { background: linear-gradient(135deg, #5c3d1e 0%, #8b5e3c 50%, #a0714f 100%); }
+.birch    { background: linear-gradient(135deg, #c8b89a 0%, #a09070 50%, #786050 100%); }
+.mahagoni { background: linear-gradient(135deg, #3d1a0e 0%, #6b2d1a 50%, #8b3a22 100%); }
+.custom   { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+
+.badge {
+  background: var(--gold);
+  color: var(--black);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+}
+
+.produkt-info { padding: 1.2rem; }
+.produkt-info h3 {
+  font-family: var(--font-head);
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.3rem;
+}
+.holz    { font-size: 0.82rem; color: var(--gold); margin-bottom: 0.3rem; }
+.groessen { font-size: 0.8rem; color: var(--gray); margin-bottom: 0.75rem; }
+.preis {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.btn-kaufen {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 0.6rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-kaufen:hover { background: var(--gold); color: var(--black); }
+
+/* ── ÜBER UNS ── */
+.ueber-uns {
+  background: var(--dark);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 5rem 2rem;
+  text-align: center;
+}
+.ueber-content {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.ueber-content h2 {
+  font-family: var(--font-head);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  color: var(--gold);
+}
+.ueber-content p {
+  color: var(--gray);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ── KONTAKT ── */
+.kontakt {
+  padding: 5rem 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.kontakt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.kontakt-form input,
+.kontakt-form textarea {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.85rem 1rem;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.kontakt-form input:focus,
+.kontakt-form textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+.kontakt-form input::placeholder,
+.kontakt-form textarea::placeholder { color: var(--gray); }
+
+.kontakt-form button {
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  align-self: flex-start;
+  padding: 0.85rem 2.5rem;
+}
+
+.kontakt-info {
+  text-align: center;
+  color: var(--gray);
+  font-size: 0.9rem;
+}
+.kontakt-info a { color: var(--gold); text-decoration: none; }
+.kontakt-info a:hover { text-decoration: underline; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--dark);
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 2rem 1.5rem;
+  text-align: center;
+}
+.footer-content {
+  margin-bottom: 1.5rem;
+}
+.footer-content .logo { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.footer-content p { color: var(--gray); font-size: 0.85rem; margin-bottom: 0.75rem; }
+.footer-links { display: flex; gap: 1.5rem; justify-content: center; }
+.footer-links a { color: var(--gray); font-size: 0.82rem; text-decoration: none; }
+.footer-links a:hover { color: var(--gold); }
+.footer-copy { color: #444; font-size: 0.78rem; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero-badge { display: none; }
+  .form-row { grid-template-columns: 1fr; }
+  .btn-primary, .btn-secondary { display: block; margin: 0 auto 1rem; max-width: 250px; }
+}
