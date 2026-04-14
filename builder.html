@@ -798,89 +798,90 @@
       const wLast = woodData[state.woods[segs - 1]];
       ['b1','b2','b3'].forEach((id,i) => svgEl(id).setAttribute('stop-color', [wLast.b1,wLast.b2,wLast.b3][i]));
 
-      // ── Build segments dynamically ──
-      const segH    = h / segs;
-      const gradIds = ['bodyGrad','bodyGrad2','bodyGrad3'];
-      const svgNS   = 'http://www.w3.org/2000/svg';
-      const grp     = svgEl('segmentsGroup');
-      grp.innerHTML = '';   // clear previous
+      // ── Build segments dynamically (HORIZONTAL curved bands, following cylinder ellipse) ──
+      const segH_each = h / segs;
+      const ry        = RY_ELLI;
+      const gradIds   = ['bodyGrad','bodyGrad2','bodyGrad3'];
+      const svgNS     = 'http://www.w3.org/2000/svg';
+      const grp       = svgEl('segmentsGroup');
+      grp.innerHTML   = '';
+
+      // Helper: lower arc path string from (cx-r, y) → (cx+r, y) curving downward
+      // (matches the front-facing ellipse of the cylinder, same curvature as top/bottom hoops)
+      const arcLR  = (y) => `A ${r} ${ry} 0 0 1 ${cx + r} ${y}`;  // left→right, lower arc
+      const arcRL  = (y) => `A ${r} ${ry} 0 0 1 ${cx - r} ${y}`;  // right→left, lower arc
 
       for (let i = 0; i < segs; i++) {
-        const segY = bodyY + i * segH;
+        const topY    = bodyY + i * segH_each;
+        const bottomY = bodyY + (i + 1) * segH_each;
 
-        // Body rect
-        const body = document.createElementNS(svgNS, 'rect');
-        setAttrs(body, { x: cx-r, y: segY, width: r*2, height: segH, fill: `url(#${gradIds[i]})` });
+        // Build the path shape for this band:
+        //   • First segment top  → flat (body starts at straight line)
+        //   • All dividers       → lower arc (curves down, matches cylinder curvature)
+        //   • Last segment bottom → flat (bottom hoop covers the edge)
+        let d;
+        if (segs === 1) {
+          // Single segment: simple rectangle
+          d = `M ${cx-r} ${topY} L ${cx+r} ${topY} L ${cx+r} ${bottomY} L ${cx-r} ${bottomY} Z`;
+        } else if (i === 0) {
+          // Top segment: flat top, curved bottom
+          d = `M ${cx-r} ${topY} L ${cx+r} ${topY} L ${cx+r} ${bottomY} ${arcRL(bottomY)} Z`;
+        } else if (i === segs - 1) {
+          // Bottom segment: curved top, flat bottom
+          d = `M ${cx-r} ${topY} ${arcLR(topY)} L ${cx+r} ${bottomY} L ${cx-r} ${bottomY} Z`;
+        } else {
+          // Middle segment: curved top and curved bottom
+          d = `M ${cx-r} ${topY} ${arcLR(topY)} L ${cx+r} ${bottomY} ${arcRL(bottomY)} Z`;
+        }
+
+        // Body fill
+        const body = document.createElementNS(svgNS, 'path');
+        setAttrs(body, { d, fill: `url(#${gradIds[i]})` });
         grp.appendChild(body);
 
         // Grain overlay
-        const grain = document.createElementNS(svgNS, 'rect');
-        setAttrs(grain, { x: cx-r, y: segY, width: r*2, height: segH, fill: 'url(#grain)' });
+        const grain = document.createElementNS(svgNS, 'path');
+        setAttrs(grain, { d, fill: 'url(#grain)' });
         grp.appendChild(grain);
 
         // Gloss overlay
-        const gloss = document.createElementNS(svgNS, 'rect');
-        setAttrs(gloss, { x: cx-r, y: segY, width: r*2, height: segH, fill: 'url(#glossOver)', opacity: f.gloss });
+        const gloss = document.createElementNS(svgNS, 'path');
+        setAttrs(gloss, { d, fill: 'url(#glossOver)', opacity: f.gloss });
         grp.appendChild(gloss);
 
-        // Divider line between segments (not after last)
+        // Curved divider arc between segments
         if (i < segs - 1) {
-          const divY = segY + segH;
-          const div = document.createElementNS(svgNS, 'line');
-          setAttrs(div, { x1: cx-r, y1: divY, x2: cx+r, y2: divY,
-                          stroke: 'rgba(0,0,0,0.55)', 'stroke-width': 2.5 });
+          const divY   = bottomY;
+          const dArc   = `M ${cx-r} ${divY} ${arcLR(divY)}`;
+          const dArcHL = `M ${cx-r} ${divY + 1.5} A ${r} ${ry} 0 0 1 ${cx+r} ${divY + 1.5}`;
+          const div    = document.createElementNS(svgNS, 'path');
+          setAttrs(div, { d: dArc, fill: 'none', stroke: 'rgba(0,0,0,0.75)', 'stroke-width': 2.5 });
           grp.appendChild(div);
-          const divHL = document.createElementNS(svgNS, 'line');
-          setAttrs(divHL, { x1: cx-r, y1: divY+1.5, x2: cx+r, y2: divY+1.5,
-                            stroke: 'rgba(255,255,255,0.13)', 'stroke-width': 1 });
+          const divHL = document.createElementNS(svgNS, 'path');
+          setAttrs(divHL, { d: dArcHL, fill: 'none', stroke: 'rgba(255,255,255,0.15)', 'stroke-width': 1 });
           grp.appendChild(divHL);
         }
 
-        // ── Per-segment height annotation (left side) ──
-        const segInches = parseFloat(state.depth.replace(',','.').replace('"','')) / segs;
-        const segLabel  = Number.isInteger(segInches)
-          ? segInches + '"'
-          : segInches.toFixed(1).replace('.',',') + '"';
+        // Wood name label centered inside segment (multi-segment only)
+        if (segs > 1) {
+          const wName   = woodData[state.woods[i]].short;
+          const midSegY = topY + segH_each / 2;
+          const lblW    = Math.max(wName.length * 5.5 + 8, 24);
+          const labelBg = document.createElementNS(svgNS, 'rect');
+          setAttrs(labelBg, { x: cx - lblW / 2, y: midSegY - 7,
+                              width: lblW, height: 13, rx: 3,
+                              fill: 'rgba(0,0,0,0.45)' });
+          grp.appendChild(labelBg);
 
-        const annX    = cx - r - 18;   // x of vertical annotation line
-        const midSegY = segY + segH / 2;
-
-        // extension lines
-        const extT = document.createElementNS(svgNS, 'line');
-        setAttrs(extT, { x1: cx-r-2, y1: segY,        x2: annX-2, y2: segY,
-                         stroke: 'rgba(245,158,11,0.35)', 'stroke-width': 0.8,
-                         'stroke-dasharray': '3,2' });
-        grp.appendChild(extT);
-
-        const extB = document.createElementNS(svgNS, 'line');
-        setAttrs(extB, { x1: cx-r-2, y1: segY+segH,   x2: annX-2, y2: segY+segH,
-                         stroke: 'rgba(245,158,11,0.35)', 'stroke-width': 0.8,
-                         'stroke-dasharray': '3,2' });
-        grp.appendChild(extB);
-
-        // arrow line
-        const arrLine = document.createElementNS(svgNS, 'line');
-        setAttrs(arrLine, { x1: annX, y1: segY+2, x2: annX, y2: segY+segH-2,
-                            stroke: 'rgba(245,158,11,0.8)', 'stroke-width': 1.2,
-                            'marker-start': 'url(#arrowStart)', 'marker-end': 'url(#arrowEnd)' });
-        grp.appendChild(arrLine);
-
-        // label background
-        const labelBg = document.createElementNS(svgNS, 'rect');
-        const lblW = segLabel.length > 3 ? 22 : 18;
-        setAttrs(labelBg, { x: annX - lblW/2, y: midSegY - 7, width: lblW, height: 13,
-                            rx: 3, fill: '#09090b' });
-        grp.appendChild(labelBg);
-
-        // label text
-        const labelTxt = document.createElementNS(svgNS, 'text');
-        setAttrs(labelTxt, { x: annX, y: midSegY + 1, 'text-anchor': 'middle',
-                             'dominant-baseline': 'middle',
-                             'font-family': 'Space Grotesk, sans-serif',
-                             'font-size': '7', 'font-weight': '700',
-                             fill: 'rgba(245,158,11,0.95)', 'letter-spacing': '0.2' });
-        labelTxt.textContent = segLabel;
-        grp.appendChild(labelTxt);
+          const labelTxt = document.createElementNS(svgNS, 'text');
+          setAttrs(labelTxt, { x: cx, y: midSegY,
+                               'text-anchor': 'middle', 'dominant-baseline': 'middle',
+                               'font-family': 'Space Grotesk, sans-serif',
+                               'font-size': '7', 'font-weight': '700',
+                               fill: 'rgba(245,158,11,0.95)', 'letter-spacing': '0.5' });
+          labelTxt.textContent = wName;
+          grp.appendChild(labelTxt);
+        }
       }
 
       // Side shadows (full height, always on top)
@@ -910,12 +911,18 @@
       // Top lugs
       buildLugs('topLugs', TOP_Y - LUG_H / 2);
 
-      // Badge – vertically centred on body
+      // Badge – show only for single segment, centred on body
       const midY = bodyY + h / 2;
-      setAttrs(svgEl('badgeRect'),  { y: midY - 14, x: cx - 32 });
-      svgEl('badgeText1').setAttribute('y', midY - 3);
-      svgEl('badgeWood').setAttribute('y',  midY + 6);
-      svgEl('badgeWood').textContent = w.short;
+      const showBadge = segs === 1;
+      svgEl('badgeRect').style.display  = showBadge ? '' : 'none';
+      svgEl('badgeText1').style.display = showBadge ? '' : 'none';
+      svgEl('badgeWood').style.display  = showBadge ? '' : 'none';
+      if (showBadge) {
+        setAttrs(svgEl('badgeRect'),  { y: midY - 14, x: cx - 32 });
+        svgEl('badgeText1').setAttribute('y', midY - 3);
+        svgEl('badgeWood').setAttribute('y',  midY + 6);
+        svgEl('badgeWood').textContent = w.short;
+      }
 
       // Preview labels
       svgEl('previewWoodName').textContent = w.preview;
@@ -969,11 +976,10 @@
         if (line2) line2.style.display = 'none';
       }
 
-      // ViewBox: leave room for left-side segment annotations + right-side depth annotation
-      const leftAnnX = cx - r - 18;
-      const totalH   = bottomCY + 50;
-      const totalW   = dimLineX + 14;
-      const minX     = leftAnnX - 16;
+      // ViewBox: small left padding + right-side depth annotation
+      const totalH = bottomCY + 50;
+      const totalW = dimLineX + 14;
+      const minX   = cx - r - 8;
       document.getElementById('drumSvg').setAttribute('viewBox',
         `${minX} 0 ${totalW - minX} ${totalH}`);
     }
