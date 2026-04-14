@@ -488,27 +488,23 @@
     <div class="builder-preview">
       <div class="preview-label">Live Vorschau</div>
 
-      <svg id="drumSvg" viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg">
+      <svg id="drumSvg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <!-- Wood grain overlay -->
-          <pattern id="grain" patternUnits="userSpaceOnUse" width="240" height="320">
-            <rect width="240" height="320" fill="transparent"/>
-            <!-- Grain lines -->
-            <line x1="20" y1="0" x2="18" y2="320" stroke="rgba(0,0,0,0.07)" stroke-width="1.5"/>
-            <line x1="38" y1="0" x2="36" y2="320" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-            <line x1="55" y1="0" x2="53" y2="320" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
-            <line x1="72" y1="0" x2="71" y2="320" stroke="rgba(255,255,255,0.04)" stroke-width="1.5"/>
-            <line x1="90" y1="0" x2="88" y2="320" stroke="rgba(0,0,0,0.08)" stroke-width="1"/>
-            <line x1="108" y1="0" x2="107" y2="320" stroke="rgba(255,255,255,0.05)" stroke-width="0.8"/>
-            <line x1="125" y1="0" x2="124" y2="320" stroke="rgba(0,0,0,0.06)" stroke-width="1.2"/>
-            <line x1="143" y1="0" x2="142" y2="320" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-            <line x1="160" y1="0" x2="159" y2="320" stroke="rgba(0,0,0,0.07)" stroke-width="1"/>
-            <line x1="178" y1="0" x2="177" y2="320" stroke="rgba(255,255,255,0.05)" stroke-width="1.5"/>
-            <line x1="196" y1="0" x2="195" y2="320" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
-            <line x1="214" y1="0" x2="213" y2="320" stroke="rgba(255,255,255,0.04)" stroke-width="0.8"/>
+          <pattern id="grain" patternUnits="userSpaceOnUse" width="240" height="360">
+            <line x1="20"  y1="0" x2="18"  y2="360" stroke="rgba(0,0,0,0.07)"        stroke-width="1.5"/>
+            <line x1="38"  y1="0" x2="36"  y2="360" stroke="rgba(255,255,255,0.05)"  stroke-width="1"/>
+            <line x1="55"  y1="0" x2="53"  y2="360" stroke="rgba(0,0,0,0.06)"        stroke-width="1"/>
+            <line x1="72"  y1="0" x2="71"  y2="360" stroke="rgba(255,255,255,0.04)"  stroke-width="1.5"/>
+            <line x1="90"  y1="0" x2="88"  y2="360" stroke="rgba(0,0,0,0.08)"        stroke-width="1"/>
+            <line x1="108" y1="0" x2="107" y2="360" stroke="rgba(255,255,255,0.05)"  stroke-width="0.8"/>
+            <line x1="125" y1="0" x2="124" y2="360" stroke="rgba(0,0,0,0.06)"        stroke-width="1.2"/>
+            <line x1="143" y1="0" x2="142" y2="360" stroke="rgba(255,255,255,0.04)"  stroke-width="1"/>
+            <line x1="160" y1="0" x2="159" y2="360" stroke="rgba(0,0,0,0.07)"        stroke-width="1"/>
+            <line x1="178" y1="0" x2="177" y2="360" stroke="rgba(255,255,255,0.05)"  stroke-width="1.5"/>
+            <line x1="196" y1="0" x2="195" y2="360" stroke="rgba(0,0,0,0.06)"        stroke-width="1"/>
+            <line x1="214" y1="0" x2="213" y2="360" stroke="rgba(255,255,255,0.04)"  stroke-width="0.8"/>
           </pattern>
 
-          <!-- Body gradient (gets updated via JS) -->
           <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%"   stop-color="#3d2008" id="g1"/>
             <stop offset="40%"  stop-color="#8B5E3C" id="g2"/>
@@ -516,105 +512,74 @@
             <stop offset="100%" stop-color="#6B4423" id="g4"/>
           </linearGradient>
 
-          <!-- Top ellipse gradient -->
           <radialGradient id="topGrad" cx="50%" cy="50%" r="50%">
             <stop offset="0%"   stop-color="#d4d4d4" stop-opacity="0.9"/>
             <stop offset="100%" stop-color="#888888" stop-opacity="0.7"/>
           </radialGradient>
 
-          <!-- Bottom ellipse gradient -->
           <linearGradient id="botGrad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%"   stop-color="#2a1505" id="b1"/>
             <stop offset="50%"  stop-color="#5c3010" id="b2"/>
             <stop offset="100%" stop-color="#2a1505" id="b3"/>
           </linearGradient>
 
-          <!-- Hoop metal gradient -->
           <linearGradient id="hoopGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%"   stop-color="#cccccc"/>
             <stop offset="40%"  stop-color="#888888"/>
             <stop offset="100%" stop-color="#444444"/>
           </linearGradient>
 
-          <!-- Lug gradient -->
           <linearGradient id="lugGrad" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%"   stop-color="#bbbbbb"/>
             <stop offset="100%" stop-color="#666666"/>
           </linearGradient>
 
-          <!-- Finish overlay for gloss -->
           <linearGradient id="glossOver" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%"  stop-color="white" stop-opacity="0.18"/>
-            <stop offset="40%" stop-color="white" stop-opacity="0.04"/>
+            <stop offset="0%"   stop-color="white" stop-opacity="0.18"/>
+            <stop offset="40%"  stop-color="white" stop-opacity="0.04"/>
             <stop offset="100%" stop-color="white" stop-opacity="0.0"/>
           </linearGradient>
         </defs>
 
         <!-- DROP SHADOW -->
-        <ellipse cx="120" cy="310" rx="90" ry="12" fill="rgba(0,0,0,0.5)"/>
+        <ellipse id="dropShadow" cx="120" cy="330" rx="90" ry="12" fill="rgba(0,0,0,0.5)"/>
 
         <!-- DRUM BODY -->
-        <rect id="drumBody" x="15" y="42" width="210" height="220" rx="2" ry="2" fill="url(#bodyGrad)"/>
-        <!-- Wood grain overlay -->
-        <rect x="15" y="42" width="210" height="220" rx="2" fill="url(#grain)"/>
-        <!-- Gloss overlay (shown/hidden via JS) -->
-        <rect id="glossOverlay" x="15" y="42" width="210" height="220" rx="2" fill="url(#glossOver)" opacity="0"/>
+        <rect id="drumBody"     x="15" y="50" width="210" height="220" rx="2" fill="url(#bodyGrad)"/>
+        <rect id="grainOverlay" x="15" y="50" width="210" height="220" rx="2" fill="url(#grain)"/>
+        <rect id="glossOverlay" x="15" y="50" width="210" height="220" rx="2" fill="url(#glossOver)" opacity="0"/>
 
-        <!-- SIDE SHADOW (depth effect) -->
-        <rect x="15" y="42" width="18" height="220" rx="2" fill="rgba(0,0,0,0.3)"/>
-        <rect x="207" y="42" width="18" height="220" rx="2" fill="rgba(0,0,0,0.25)"/>
+        <!-- SIDE SHADOWS -->
+        <rect id="shadowLeft"  x="15"  y="50" width="18" height="220" rx="2" fill="rgba(0,0,0,0.3)"/>
+        <rect id="shadowRight" x="207" y="50" width="18" height="220" rx="2" fill="rgba(0,0,0,0.25)"/>
 
-        <!-- BOTTOM ELLIPSE (visible shell bottom) -->
-        <ellipse cx="120" cy="262" rx="105" ry="22" fill="url(#botGrad)"/>
-        <ellipse cx="120" cy="262" rx="105" ry="22" fill="url(#grain)" opacity="0.5"/>
-
-        <!-- BOTTOM HOOP -->
-        <ellipse cx="120" cy="262" rx="105" ry="22" fill="none" stroke="url(#hoopGrad)" stroke-width="9"/>
-        <ellipse cx="120" cy="262" rx="105" ry="22" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-
-        <!-- TENSION RODS / LUGS (bottom) -->
-        <g fill="url(#lugGrad)" stroke="rgba(0,0,0,0.4)" stroke-width="0.5">
-          <rect x="25"  y="248" width="8" height="28" rx="2"/>
-          <rect x="52"  y="248" width="8" height="28" rx="2"/>
-          <rect x="79"  y="248" width="8" height="28" rx="2"/>
-          <rect x="106" y="248" width="8" height="28" rx="2"/>
-          <rect x="133" y="248" width="8" height="28" rx="2"/>
-          <rect x="160" y="248" width="8" height="28" rx="2"/>
-          <rect x="187" y="248" width="8" height="28" rx="2"/>
-          <rect x="207" y="248" width="8" height="28" rx="2"/>
+        <!-- BOTTOM GROUP (translates with depth) -->
+        <g id="bottomGroup">
+          <ellipse id="bottomFill"   cx="120" cy="270" rx="105" ry="22" fill="url(#botGrad)"/>
+          <ellipse id="bottomGrain"  cx="120" cy="270" rx="105" ry="22" fill="url(#grain)" opacity="0.5"/>
+          <ellipse id="bottomHoop"   cx="120" cy="270" rx="105" ry="22" fill="none" stroke="url(#hoopGrad)" stroke-width="9"/>
+          <ellipse id="bottomHoopHL" cx="120" cy="270" rx="105" ry="22" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <g id="bottomLugs" fill="url(#lugGrad)" stroke="rgba(0,0,0,0.4)" stroke-width="0.5"></g>
         </g>
 
-        <!-- TENSION RODS / LUGS (top) -->
-        <g fill="url(#lugGrad)" stroke="rgba(0,0,0,0.4)" stroke-width="0.5">
-          <rect x="25"  y="28" width="8" height="28" rx="2"/>
-          <rect x="52"  y="28" width="8" height="28" rx="2"/>
-          <rect x="79"  y="28" width="8" height="28" rx="2"/>
-          <rect x="106" y="28" width="8" height="28" rx="2"/>
-          <rect x="133" y="28" width="8" height="28" rx="2"/>
-          <rect x="160" y="28" width="8" height="28" rx="2"/>
-          <rect x="187" y="28" width="8" height="28" rx="2"/>
-          <rect x="207" y="28" width="8" height="28" rx="2"/>
-        </g>
+        <!-- TOP LUGS -->
+        <g id="topLugs" fill="url(#lugGrad)" stroke="rgba(0,0,0,0.4)" stroke-width="0.5"></g>
 
-        <!-- TOP ELLIPSE (drum head) -->
-        <ellipse cx="120" cy="42" rx="105" ry="22" fill="url(#topGrad)"/>
-        <!-- Head texture (subtle) -->
-        <ellipse cx="120" cy="42" rx="95" ry="18" fill="none" stroke="rgba(200,200,200,0.3)" stroke-width="1"/>
-        <ellipse cx="120" cy="42" rx="70" ry="13" fill="none" stroke="rgba(200,200,200,0.15)" stroke-width="1"/>
+        <!-- TOP ELLIPSE -->
+        <ellipse id="topFill"   cx="120" cy="50" rx="105" ry="22" fill="url(#topGrad)"/>
+        <ellipse id="topRing1"  cx="120" cy="50" rx="95"  ry="18" fill="none" stroke="rgba(200,200,200,0.3)" stroke-width="1"/>
+        <ellipse id="topRing2"  cx="120" cy="50" rx="70"  ry="13" fill="none" stroke="rgba(200,200,200,0.15)" stroke-width="1"/>
+        <ellipse id="topHoop"   cx="120" cy="50" rx="105" ry="22" fill="none" stroke="url(#hoopGrad)" stroke-width="9"/>
+        <ellipse id="topHoopHL" cx="120" cy="50" rx="105" ry="22" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
 
-        <!-- TOP HOOP -->
-        <ellipse cx="120" cy="42" rx="105" ry="22" fill="none" stroke="url(#hoopGrad)" stroke-width="9"/>
-        <ellipse cx="120" cy="42" rx="105" ry="22" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-
-        <!-- BADGE / LOGO area on shell -->
-        <rect x="88" y="138" width="64" height="28" rx="4" fill="rgba(0,0,0,0.35)"/>
-        <text x="120" y="152" text-anchor="middle" dominant-baseline="middle"
-              font-family="Space Grotesk, sans-serif" font-size="8" font-weight="700"
-              fill="rgba(255,255,255,0.6)" letter-spacing="1">JD CUSTOMS</text>
-        <text x="120" y="160" text-anchor="middle" dominant-baseline="middle"
-              id="badgeWood"
-              font-family="Space Grotesk, sans-serif" font-size="6" font-weight="500"
-              fill="rgba(245,158,11,0.8)" letter-spacing="0.5">MAPLE</text>
+        <!-- BADGE -->
+        <rect  id="badgeRect"  x="88" y="146" width="64" height="28" rx="4" fill="rgba(0,0,0,0.35)"/>
+        <text  id="badgeText1" x="120" y="160" text-anchor="middle" dominant-baseline="middle"
+               font-family="Space Grotesk, sans-serif" font-size="8" font-weight="700"
+               fill="rgba(255,255,255,0.6)" letter-spacing="1">JD CUSTOMS</text>
+        <text  id="badgeWood"  x="120" y="168" text-anchor="middle" dominant-baseline="middle"
+               font-family="Space Grotesk, sans-serif" font-size="6" font-weight="500"
+               fill="rgba(245,158,11,0.8)" letter-spacing="0.5">MAPLE</text>
       </svg>
 
       <div class="preview-info">
@@ -627,29 +592,157 @@
   <script>
     // ── DATA ──
     const woodData = {
-      maple:    { name: 'Maple (Ahorn)',    short: 'MAPLE',    preview: 'Maple · Ahorn',    g1:'#3d2008', g2:'#8B5E3C', g3:'#a0622d', g4:'#6B4423', b1:'#2a1505', b2:'#5a3818', b3:'#2a1505', price: 149 },
-      birch:    { name: 'Birch (Birke)',    short: 'BIRCH',    preview: 'Birch · Birke',     g1:'#9a8060', g2:'#c8b49a', g3:'#d4c0a8', g4:'#b0956e', b1:'#8a7055', b2:'#a08870', b3:'#8a7055', price: 139 },
-      mahagoni: { name: 'Mahagoni',         short: 'MAHAGONI', preview: 'Mahagoni',          g1:'#2d0d05', g2:'#6a1e10', g3:'#7a2416', g4:'#4a1009', b1:'#200a04', b2:'#4a1409', b3:'#200a04', price: 159 },
-      walnut:   { name: 'Walnut (Walnuss)', short: 'WALNUT',   preview: 'Walnut · Walnuss',  g1:'#1a0f05', g2:'#4a2810', g3:'#5c3518', g4:'#3a2008', b1:'#100905', b2:'#351a08', b3:'#100905', price: 179 },
-      oak:      { name: 'Oak (Eiche)',      short: 'OAK',      preview: 'Oak · Eiche',       g1:'#3d2c10', g2:'#7a5a25', g3:'#8a6530', g4:'#604820', b1:'#2d2008', b2:'#5a4018', b3:'#2d2008', price: 169 },
-      custom:   { name: 'Custom',           short: 'CUSTOM',   preview: 'Custom Build',      g1:'#0d1117', g2:'#1e2535', g3:'#162032', g4:'#0a0e18', b1:'#0a0e18', b2:'#16202e', b3:'#0a0e18', price: null },
+      maple:    { name: 'Maple (Ahorn)',    short: 'MAPLE',    preview: 'Maple · Ahorn',   g1:'#3d2008', g2:'#8B5E3C', g3:'#a0622d', g4:'#6B4423', b1:'#2a1505', b2:'#5a3818', b3:'#2a1505', price: 149 },
+      birch:    { name: 'Birch (Birke)',    short: 'BIRCH',    preview: 'Birch · Birke',    g1:'#9a8060', g2:'#c8b49a', g3:'#d4c0a8', g4:'#b0956e', b1:'#8a7055', b2:'#a08870', b3:'#8a7055', price: 139 },
+      mahagoni: { name: 'Mahagoni',         short: 'MAHAGONI', preview: 'Mahagoni',         g1:'#2d0d05', g2:'#6a1e10', g3:'#7a2416', g4:'#4a1009', b1:'#200a04', b2:'#4a1409', b3:'#200a04', price: 159 },
+      walnut:   { name: 'Walnut (Walnuss)', short: 'WALNUT',   preview: 'Walnut · Walnuss', g1:'#1a0f05', g2:'#4a2810', g3:'#5c3518', g4:'#3a2008', b1:'#100905', b2:'#351a08', b3:'#100905', price: 179 },
+      oak:      { name: 'Oak (Eiche)',      short: 'OAK',      preview: 'Oak · Eiche',      g1:'#3d2c10', g2:'#7a5a25', g3:'#8a6530', g4:'#604820', b1:'#2d2008', b2:'#5a4018', b3:'#2d2008', price: 169 },
+      custom:   { name: 'Custom',           short: 'CUSTOM',   preview: 'Custom Build',     g1:'#0d1117', g2:'#1e2535', g3:'#162032', g4:'#0a0e18', b1:'#0a0e18', b2:'#16202e', b3:'#0a0e18', price: null },
     };
 
     const finishData = {
-      natural: { name: 'Natural / Öl',   gloss: 0 },
+      natural: { name: 'Natural / Öl',    gloss: 0   },
       gloss:   { name: 'High Gloss Lack', gloss: 0.7 },
-      matte:   { name: 'Matte Lack',      gloss: 0 },
+      matte:   { name: 'Matte Lack',      gloss: 0   },
       wrap:    { name: 'Wrap',            gloss: 0.2 },
     };
 
-    let state = {
-      wood: 'maple',
-      diameter: '14"',
-      depth: '5,5"',
-      finish: 'natural',
+    // Depth → SVG body height in px (top of drum fixed at y=50)
+    const depthPx = {
+      '5"':   80,
+      '5,5"': 92,
+      '6"':   106,
+      '6,5"': 120,
+      '8"':   152,
+      '10"':  190,
+      '12"':  228,
+      '14"':  265,
     };
 
-    // ── SELECT WOOD ──
+    // Diameter → ellipse rx in px (SVG is 240px wide, center at 120)
+    const diamRx = {
+      '10"': 68,
+      '12"': 78,
+      '13"': 85,
+      '14"': 93,
+      '16"': 102,
+      '18"': 108,
+      '20"': 113,
+      '22"': 117,
+    };
+
+    const TOP_Y    = 50;   // fixed top of drum
+    const RY_ELLI  = 22;   // ellipse y-radius (constant)
+    const LUG_W    = 8;
+    const LUG_H    = 28;
+    const LUG_CNT  = 8;
+
+    let state = { wood: 'maple', diameter: '14"', depth: '5,5"', finish: 'natural' };
+
+    // ── SVG HELPERS ──
+    function svgEl(id) { return document.getElementById(id); }
+    function setAttrs(el, attrs) { Object.entries(attrs).forEach(([k,v]) => el.setAttribute(k, v)); }
+
+    function buildLugs(groupId, y) {
+      const r   = diamRx[state.diameter] || 93;
+      const cx  = 120;
+      const grp = svgEl(groupId);
+      grp.innerHTML = '';
+      const startX = cx - r + 8;
+      const endX   = cx + r - 8;
+      const step   = (endX - startX) / (LUG_CNT - 1);
+      for (let i = 0; i < LUG_CNT; i++) {
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        setAttrs(rect, {
+          x: startX + i * step - LUG_W / 2,
+          y: y,
+          width: LUG_W,
+          height: LUG_H,
+          rx: 2,
+        });
+        grp.appendChild(rect);
+      }
+    }
+
+    // ── MAIN UPDATE ──
+    function updateDrum() {
+      const w  = woodData[state.wood];
+      const f  = finishData[state.finish];
+      const h  = depthPx[state.depth]   || 120;
+      const r  = diamRx[state.diameter] || 93;
+      const cx = 120;
+      const bodyY    = TOP_Y;
+      const bottomCY = TOP_Y + h;
+
+      // Gradients – wood colour
+      ['g1','g2','g3','g4'].forEach((id,i) => svgEl(id).setAttribute('stop-color', [w.g1,w.g2,w.g3,w.g4][i]));
+      ['b1','b2','b3'].forEach((id,i)       => svgEl(id).setAttribute('stop-color', [w.b1,w.b2,w.b3][i]));
+
+      // Gloss finish overlay
+      svgEl('glossOverlay').setAttribute('opacity', f.gloss);
+
+      // Body rects – height + width
+      ['drumBody','grainOverlay','glossOverlay'].forEach(id => {
+        setAttrs(svgEl(id), { x: cx - r, y: bodyY, width: r * 2, height: h });
+      });
+
+      // Side shadows
+      setAttrs(svgEl('shadowLeft'),  { x: cx - r,      y: bodyY, width: 18, height: h });
+      setAttrs(svgEl('shadowRight'), { x: cx + r - 18, y: bodyY, width: 18, height: h });
+
+      // Bottom group – translate so its elements land at bottomCY
+      const delta = bottomCY - 270;   // 270 was the original cy in the SVG
+      svgEl('bottomGroup').setAttribute('transform', `translate(0, ${delta})`);
+
+      // Bottom ellipses (inside group, keep original cy=270, group moves them)
+      ['bottomFill','bottomGrain','bottomHoop','bottomHoopHL'].forEach(id => {
+        svgEl(id).setAttribute('rx', r);
+      });
+
+      // Bottom lugs (y relative to group → absolute = 270 - LUG_H/2 + delta unwound by group)
+      buildLugs('bottomLugs', 270 - LUG_H / 2);
+
+      // Drop shadow
+      setAttrs(svgEl('dropShadow'), { cy: bottomCY + 22, rx: r - 12 });
+
+      // Top ellipses
+      ['topFill','topHoop','topHoopHL'].forEach(id => svgEl(id).setAttribute('rx', r));
+      svgEl('topRing1').setAttribute('rx', r - 10);
+      svgEl('topRing2').setAttribute('rx', r - 35);
+
+      // Top lugs
+      buildLugs('topLugs', TOP_Y - LUG_H / 2);
+
+      // Badge – vertically centred on body
+      const midY = bodyY + h / 2;
+      setAttrs(svgEl('badgeRect'),  { y: midY - 14, x: cx - 32 });
+      svgEl('badgeText1').setAttribute('y', midY - 3);
+      svgEl('badgeWood').setAttribute('y',  midY + 6);
+      svgEl('badgeWood').textContent = w.short;
+
+      // Preview labels
+      svgEl('previewWoodName').textContent = w.preview;
+      svgEl('previewSize').textContent = `${state.diameter} × ${state.depth} · ${f.name}`;
+
+      // Adjust SVG viewBox height so tall drums don't clip
+      const totalH = bottomCY + 50;
+      document.getElementById('drumSvg').setAttribute('viewBox', `0 0 240 ${totalH}`);
+    }
+
+    function updateSummary() {
+      const w = woodData[state.wood];
+      const f = finishData[state.finish];
+      svgEl('sumWood').textContent     = w.name;
+      svgEl('sumDiameter').textContent = state.diameter;
+      svgEl('sumDepth').textContent    = state.depth;
+      svgEl('sumFinish').textContent   = f.name;
+      const priceEl = svgEl('configPrice');
+      priceEl.innerHTML = w.price
+        ? `ab ${w.price} € <small>· unverbindliche Schätzung</small>`
+        : `Auf Anfrage <small>· wir erstellen ein Angebot</small>`;
+    }
+
+    // ── EVENT HANDLERS ──
     function selectWood(btn, wood) {
       document.querySelectorAll('.wood-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
@@ -658,79 +751,22 @@
       updateSummary();
     }
 
-    // ── SELECT SIZE ──
     function selectSize(btn, type) {
       const group = type === 'diameter' ? '#diameterOptions' : '#depthOptions';
       document.querySelectorAll(group + ' .size-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       if (type === 'diameter') state.diameter = btn.dataset.val;
-      else state.depth = btn.dataset.val;
+      else                     state.depth    = btn.dataset.val;
+      updateDrum();
       updateSummary();
-      updatePreviewLabel();
     }
 
-    // ── SELECT FINISH ──
     function selectFinish(btn, finish) {
       document.querySelectorAll('.finish-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       state.finish = finish;
       updateDrum();
       updateSummary();
-    }
-
-    // ── UPDATE DRUM SVG ──
-    function updateDrum() {
-      const w = woodData[state.wood];
-      const f = finishData[state.finish];
-
-      // Update gradient stops
-      document.getElementById('g1').setAttribute('stop-color', w.g1);
-      document.getElementById('g2').setAttribute('stop-color', w.g2);
-      document.getElementById('g3').setAttribute('stop-color', w.g3);
-      document.getElementById('g4').setAttribute('stop-color', w.g4);
-      document.getElementById('b1').setAttribute('stop-color', w.b1);
-      document.getElementById('b2').setAttribute('stop-color', w.b2);
-      document.getElementById('b3').setAttribute('stop-color', w.b3);
-
-      // Gloss overlay
-      document.getElementById('glossOverlay').setAttribute('opacity', f.gloss);
-
-      // Badge & preview name
-      document.getElementById('badgeWood').textContent = w.short;
-      document.getElementById('previewWoodName').textContent = w.preview;
-    }
-
-    // ── UPDATE PREVIEW LABEL ──
-    function updatePreviewLabel() {
-      const f = finishData[state.finish] || finishData['natural'];
-      document.getElementById('previewSize').textContent =
-        `${state.diameter} × ${state.depth} · ${f.name}`;
-    }
-
-    // ── UPDATE SUMMARY ──
-    function updateSummary() {
-      const w = woodData[state.wood];
-      const f = finishData[state.finish];
-
-      document.getElementById('sumWood').textContent     = w.name;
-      document.getElementById('sumDiameter').textContent = state.diameter;
-      document.getElementById('sumDepth').textContent    = state.depth;
-      document.getElementById('sumFinish').textContent   = f.name;
-
-      const priceEl = document.getElementById('configPrice');
-      if (w.price) {
-        priceEl.innerHTML = `ab ${w.price} € <small>· unverbindliche Schätzung</small>`;
-      } else {
-        priceEl.innerHTML = `Auf Anfrage <small>· wir erstellen ein Angebot</small>`;
-      }
-
-      // Pre-fill contact link
-      const msg = encodeURIComponent(
-        `Meine Konfiguration:\nHolz: ${w.name}\nDurchmesser: ${state.diameter}\nTiefe: ${state.depth}\nFinish: ${f.name}`
-      );
-      document.getElementById('ctaLink').href = `index.html#kontakt`;
-
-      updatePreviewLabel();
     }
 
     // Init
