@@ -55,6 +55,47 @@
       margin-bottom: 1.25rem;
     }
 
+    /* ── SEGMENT TOGGLE ── */
+    .seg-toggle {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .seg-btn {
+      flex: 1;
+      background: var(--card);
+      border: 2px solid var(--border);
+      color: var(--muted);
+      padding: 0.55rem 0.5rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: var(--font-h);
+    }
+    .seg-btn:hover { border-color: var(--subtle); color: var(--white); }
+    .seg-btn.selected { border-color: var(--gold); color: var(--gold); background: rgba(245,158,11,0.08); }
+
+    .seg-section { margin-bottom: 1.25rem; }
+    .seg-section.hidden { display: none; }
+    .seg-section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .seg-color-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
     /* ── WOOD SELECTOR ── */
     .wood-grid {
       display: grid;
@@ -326,67 +367,66 @@
         <p>Wähle dein Holz, deine Größe und dein Finish – wir bauen ihn genau so.</p>
       </div>
 
-      <!-- STEP 1: HOLZ -->
+      <!-- STEP 1: SEGMENTE & HOLZ -->
       <div class="builder-step">
         <span class="step-label">Schritt 01</span>
-        <div class="step-title">Wähle dein Holz</div>
-        <div class="wood-grid">
+        <div class="step-title">Segmente & Holz</div>
 
-          <button class="wood-btn selected" onclick="selectWood(this, 'maple')" data-wood="maple">
-            <div class="wood-swatch swatch-maple"></div>
-            <div class="wood-info">
-              <strong>Maple</strong>
-              <span>Ahorn</span>
-              <span class="wood-char">Warm · Ausgewogen</span>
-            </div>
-          </button>
-
-          <button class="wood-btn" onclick="selectWood(this, 'birch')" data-wood="birch">
-            <div class="wood-swatch swatch-birch"></div>
-            <div class="wood-info">
-              <strong>Birch</strong>
-              <span>Birke</span>
-              <span class="wood-char">Attack · Brilliant</span>
-            </div>
-          </button>
-
-          <button class="wood-btn" onclick="selectWood(this, 'mahagoni')" data-wood="mahagoni">
-            <div class="wood-swatch swatch-mahagoni"></div>
-            <div class="wood-info">
-              <strong>Mahagoni</strong>
-              <span>Mahogany</span>
-              <span class="wood-char">Tief · Vintage</span>
-            </div>
-          </button>
-
-          <button class="wood-btn" onclick="selectWood(this, 'walnut')" data-wood="walnut">
-            <div class="wood-swatch swatch-walnut"></div>
-            <div class="wood-info">
-              <strong>Walnut</strong>
-              <span>Walnuss</span>
-              <span class="wood-char">Dunkel · Kräftig</span>
-            </div>
-          </button>
-
-          <button class="wood-btn" onclick="selectWood(this, 'oak')" data-wood="oak">
-            <div class="wood-swatch swatch-oak"></div>
-            <div class="wood-info">
-              <strong>Oak</strong>
-              <span>Eiche</span>
-              <span class="wood-char">Robust · Resonant</span>
-            </div>
-          </button>
-
-          <button class="wood-btn" onclick="selectWood(this, 'custom')" data-wood="custom">
-            <div class="wood-swatch swatch-custom"></div>
-            <div class="wood-info">
-              <strong>Custom</strong>
-              <span>Auf Anfrage</span>
-              <span class="wood-char">Dein Wunschholz</span>
-            </div>
-          </button>
-
+        <!-- Segment count -->
+        <div class="seg-toggle">
+          <button class="seg-btn selected" onclick="selectSegments(this, 1)">1 Segment</button>
+          <button class="seg-btn"          onclick="selectSegments(this, 2)">2 Segmente</button>
+          <button class="seg-btn"          onclick="selectSegments(this, 3)">3 Segmente</button>
         </div>
+
+        <!-- Segment 1 -->
+        <div class="seg-section" id="seg1Section">
+          <div class="seg-section-label">
+            <span class="seg-color-dot" id="dot1" style="background:#8B5E3C"></span>
+            Segment 1
+          </div>
+          <div class="wood-grid" id="woodGrid1">
+            <button class="wood-btn selected" onclick="selectWood(this,1,'maple')"    data-wood="maple">   <div class="wood-swatch swatch-maple"></div>   <div class="wood-info"><strong>Maple</strong>   <span>Ahorn</span>     <span class="wood-char">Warm · Ausgewogen</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,1,'birch')"    data-wood="birch">   <div class="wood-swatch swatch-birch"></div>   <div class="wood-info"><strong>Birch</strong>   <span>Birke</span>     <span class="wood-char">Attack · Brilliant</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,1,'mahagoni')" data-wood="mahagoni"><div class="wood-swatch swatch-mahagoni"></div><div class="wood-info"><strong>Mahagoni</strong><span>Mahogany</span>  <span class="wood-char">Tief · Vintage</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,1,'walnut')"   data-wood="walnut">  <div class="wood-swatch swatch-walnut"></div>  <div class="wood-info"><strong>Walnut</strong>  <span>Walnuss</span>   <span class="wood-char">Dunkel · Kräftig</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,1,'oak')"      data-wood="oak">     <div class="wood-swatch swatch-oak"></div>     <div class="wood-info"><strong>Oak</strong>     <span>Eiche</span>     <span class="wood-char">Robust · Resonant</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,1,'custom')"   data-wood="custom">  <div class="wood-swatch swatch-custom"></div>  <div class="wood-info"><strong>Custom</strong>  <span>Auf Anfrage</span><span class="wood-char">Dein Wunschholz</span></div></button>
+          </div>
+        </div>
+
+        <!-- Segment 2 -->
+        <div class="seg-section hidden" id="seg2Section">
+          <div class="seg-section-label">
+            <span class="seg-color-dot" id="dot2" style="background:#5c1a0e"></span>
+            Segment 2
+          </div>
+          <div class="wood-grid" id="woodGrid2">
+            <button class="wood-btn"          onclick="selectWood(this,2,'maple')"    data-wood="maple">   <div class="wood-swatch swatch-maple"></div>   <div class="wood-info"><strong>Maple</strong>   <span>Ahorn</span>     <span class="wood-char">Warm · Ausgewogen</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,2,'birch')"    data-wood="birch">   <div class="wood-swatch swatch-birch"></div>   <div class="wood-info"><strong>Birch</strong>   <span>Birke</span>     <span class="wood-char">Attack · Brilliant</span></div></button>
+            <button class="wood-btn selected" onclick="selectWood(this,2,'mahagoni')" data-wood="mahagoni"><div class="wood-swatch swatch-mahagoni"></div><div class="wood-info"><strong>Mahagoni</strong><span>Mahogany</span>  <span class="wood-char">Tief · Vintage</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,2,'walnut')"   data-wood="walnut">  <div class="wood-swatch swatch-walnut"></div>  <div class="wood-info"><strong>Walnut</strong>  <span>Walnuss</span>   <span class="wood-char">Dunkel · Kräftig</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,2,'oak')"      data-wood="oak">     <div class="wood-swatch swatch-oak"></div>     <div class="wood-info"><strong>Oak</strong>     <span>Eiche</span>     <span class="wood-char">Robust · Resonant</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,2,'custom')"   data-wood="custom">  <div class="wood-swatch swatch-custom"></div>  <div class="wood-info"><strong>Custom</strong>  <span>Auf Anfrage</span><span class="wood-char">Dein Wunschholz</span></div></button>
+          </div>
+        </div>
+
+        <!-- Segment 3 -->
+        <div class="seg-section hidden" id="seg3Section">
+          <div class="seg-section-label">
+            <span class="seg-color-dot" id="dot3" style="background:#3d2210"></span>
+            Segment 3
+          </div>
+          <div class="wood-grid" id="woodGrid3">
+            <button class="wood-btn"          onclick="selectWood(this,3,'maple')"    data-wood="maple">   <div class="wood-swatch swatch-maple"></div>   <div class="wood-info"><strong>Maple</strong>   <span>Ahorn</span>     <span class="wood-char">Warm · Ausgewogen</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,3,'birch')"    data-wood="birch">   <div class="wood-swatch swatch-birch"></div>   <div class="wood-info"><strong>Birch</strong>   <span>Birke</span>     <span class="wood-char">Attack · Brilliant</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,3,'mahagoni')" data-wood="mahagoni"><div class="wood-swatch swatch-mahagoni"></div><div class="wood-info"><strong>Mahagoni</strong><span>Mahogany</span>  <span class="wood-char">Tief · Vintage</span></div></button>
+            <button class="wood-btn selected" onclick="selectWood(this,3,'walnut')"   data-wood="walnut">  <div class="wood-swatch swatch-walnut"></div>  <div class="wood-info"><strong>Walnut</strong>  <span>Walnuss</span>   <span class="wood-char">Dunkel · Kräftig</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,3,'oak')"      data-wood="oak">     <div class="wood-swatch swatch-oak"></div>     <div class="wood-info"><strong>Oak</strong>     <span>Eiche</span>     <span class="wood-char">Robust · Resonant</span></div></button>
+            <button class="wood-btn"          onclick="selectWood(this,3,'custom')"   data-wood="custom">  <div class="wood-swatch swatch-custom"></div>  <div class="wood-info"><strong>Custom</strong>  <span>Auf Anfrage</span><span class="wood-char">Dein Wunschholz</span></div></button>
+          </div>
+        </div>
+
       </div>
 
       <!-- STEP 2: GRÖSSE -->
@@ -511,6 +551,18 @@
             <stop offset="60%"  stop-color="#a0622d" id="g3"/>
             <stop offset="100%" stop-color="#6B4423" id="g4"/>
           </linearGradient>
+          <linearGradient id="bodyGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#2d0d05" id="g1b"/>
+            <stop offset="40%"  stop-color="#6a1e10" id="g2b"/>
+            <stop offset="60%"  stop-color="#7a2416" id="g3b"/>
+            <stop offset="100%" stop-color="#4a1009" id="g4b"/>
+          </linearGradient>
+          <linearGradient id="bodyGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="#1a0f05" id="g1c"/>
+            <stop offset="40%"  stop-color="#4a2810" id="g2c"/>
+            <stop offset="60%"  stop-color="#5c3518" id="g3c"/>
+            <stop offset="100%" stop-color="#3a2008" id="g4c"/>
+          </linearGradient>
 
           <radialGradient id="topGrad" cx="50%" cy="50%" r="50%">
             <stop offset="0%"   stop-color="#d4d4d4" stop-opacity="0.9"/>
@@ -552,12 +604,30 @@
         <!-- DROP SHADOW -->
         <ellipse id="dropShadow" cx="120" cy="330" rx="90" ry="12" fill="rgba(0,0,0,0.5)"/>
 
-        <!-- DRUM BODY -->
-        <rect id="drumBody"     x="15" y="50" width="210" height="220" rx="2" fill="url(#bodyGrad)"/>
-        <rect id="grainOverlay" x="15" y="50" width="210" height="220" rx="2" fill="url(#grain)"/>
-        <rect id="glossOverlay" x="15" y="50" width="210" height="220" rx="2" fill="url(#glossOver)" opacity="0"/>
+        <!-- DRUM BODY (segment 1) -->
+        <rect id="drumBody"      x="15" y="50" width="210" height="220" rx="2" fill="url(#bodyGrad)"/>
+        <!-- DRUM BODY segment 2 (hidden by default) -->
+        <rect id="drumBody2"     x="15" y="50" width="210" height="0"   rx="0" fill="url(#bodyGrad2)" display="none"/>
+        <!-- DRUM BODY segment 3 (hidden by default) -->
+        <rect id="drumBody3"     x="15" y="50" width="210" height="0"   rx="0" fill="url(#bodyGrad3)" display="none"/>
 
-        <!-- SIDE SHADOWS -->
+        <!-- GRAIN overlays per segment -->
+        <rect id="grainOverlay"  x="15" y="50" width="210" height="220" rx="2" fill="url(#grain)"/>
+        <rect id="grainOverlay2" x="15" y="50" width="210" height="0"   rx="0" fill="url(#grain)" display="none"/>
+        <rect id="grainOverlay3" x="15" y="50" width="210" height="0"   rx="0" fill="url(#grain)" display="none"/>
+
+        <!-- GLOSS overlays -->
+        <rect id="glossOverlay"  x="15" y="50" width="210" height="220" rx="2" fill="url(#glossOver)" opacity="0"/>
+        <rect id="glossOverlay2" x="15" y="50" width="210" height="0"   rx="0" fill="url(#glossOver)" opacity="0" display="none"/>
+        <rect id="glossOverlay3" x="15" y="50" width="210" height="0"   rx="0" fill="url(#glossOver)" opacity="0" display="none"/>
+
+        <!-- SEGMENT DIVIDER LINES -->
+        <line id="segDivider1" x1="15" y1="0" x2="225" y2="0" stroke="rgba(0,0,0,0.5)"         stroke-width="2" display="none"/>
+        <line id="segDivider2" x1="15" y1="0" x2="225" y2="0" stroke="rgba(0,0,0,0.5)"         stroke-width="2" display="none"/>
+        <line id="segDivHL1"   x1="15" y1="0" x2="225" y2="0" stroke="rgba(255,255,255,0.12)"  stroke-width="1" display="none"/>
+        <line id="segDivHL2"   x1="15" y1="0" x2="225" y2="0" stroke="rgba(255,255,255,0.12)"  stroke-width="1" display="none"/>
+
+        <!-- SIDE SHADOWS (always on top of body segments) -->
         <rect id="shadowLeft"  x="15"  y="50" width="18" height="220" rx="2" fill="rgba(0,0,0,0.3)"/>
         <rect id="shadowRight" x="207" y="50" width="18" height="220" rx="2" fill="rgba(0,0,0,0.25)"/>
 
@@ -630,7 +700,7 @@
   </div>
 
   <script>
-    // ── DATA ──
+    // ── WOOD DATA ──
     const woodData = {
       maple:    { name: 'Maple (Ahorn)',    short: 'MAPLE',    preview: 'Maple · Ahorn',   g1:'#3d2008', g2:'#8B5E3C', g3:'#a0622d', g4:'#6B4423', b1:'#2a1505', b2:'#5a3818', b3:'#2a1505', price: 149 },
       birch:    { name: 'Birch (Birke)',    short: 'BIRCH',    preview: 'Birch · Birke',    g1:'#9a8060', g2:'#c8b49a', g3:'#d4c0a8', g4:'#b0956e', b1:'#8a7055', b2:'#a08870', b3:'#8a7055', price: 139 },
@@ -677,7 +747,23 @@
     const LUG_H    = 28;
     const LUG_CNT  = 8;
 
-    let state = { wood: 'maple', diameter: '14"', depth: '5,5"', finish: 'natural' };
+    let state = {
+      segments: 1,
+      woods: ['maple', 'mahagoni', 'walnut'],  // one per segment slot
+      diameter: '14"',
+      depth: '5,5"',
+      finish: 'natural',
+    };
+
+    // Segment accent colours (for the dot indicators)
+    const segDotColors = {
+      maple:    '#8B5E3C',
+      birch:    '#b0956e',
+      mahagoni: '#5c1a0e',
+      walnut:   '#3d2210',
+      oak:      '#6b4f20',
+      custom:   '#162032',
+    };
 
     // ── SVG HELPERS ──
     function svgEl(id) { return document.getElementById(id); }
@@ -704,9 +790,18 @@
       }
     }
 
+    // ── GRADIENT HELPER ──
+    function applyWoodGradient(w, g1id, g2id, g3id, g4id) {
+      svgEl(g1id).setAttribute('stop-color', w.g1);
+      svgEl(g2id).setAttribute('stop-color', w.g2);
+      svgEl(g3id).setAttribute('stop-color', w.g3);
+      svgEl(g4id).setAttribute('stop-color', w.g4);
+    }
+
     // ── MAIN UPDATE ──
     function updateDrum() {
-      const w  = woodData[state.wood];
+      const segs = state.segments;
+      const w  = woodData[state.woods[0]];
       const f  = finishData[state.finish];
       const h  = depthPx[state.depth]   || 120;
       const r  = diamRx[state.diameter] || 93;
@@ -714,19 +809,62 @@
       const bodyY    = TOP_Y;
       const bottomCY = TOP_Y + h;
 
-      // Gradients – wood colour
-      ['g1','g2','g3','g4'].forEach((id,i) => svgEl(id).setAttribute('stop-color', [w.g1,w.g2,w.g3,w.g4][i]));
-      ['b1','b2','b3'].forEach((id,i)       => svgEl(id).setAttribute('stop-color', [w.b1,w.b2,w.b3][i]));
+      // ── Wood gradients ──
+      applyWoodGradient(woodData[state.woods[0]], 'g1','g2','g3','g4');
+      if (segs >= 2) applyWoodGradient(woodData[state.woods[1]], 'g1b','g2b','g3b','g4b');
+      if (segs >= 3) applyWoodGradient(woodData[state.woods[2]], 'g1c','g2c','g3c','g4c');
 
-      // Gloss finish overlay
-      svgEl('glossOverlay').setAttribute('opacity', f.gloss);
+      // Bottom ellipse colour = last segment's wood
+      const wLast = woodData[state.woods[segs - 1]];
+      ['b1','b2','b3'].forEach((id,i) => svgEl(id).setAttribute('stop-color', [wLast.b1,wLast.b2,wLast.b3][i]));
 
-      // Body rects – height + width
-      ['drumBody','grainOverlay','glossOverlay'].forEach(id => {
-        setAttrs(svgEl(id), { x: cx - r, y: bodyY, width: r * 2, height: h });
-      });
+      // ── Segment heights ──
+      const segH = h / segs;
 
-      // Side shadows
+      // Segment 1 (top)
+      setAttrs(svgEl('drumBody'),      { x: cx-r, y: bodyY,          width: r*2, height: segH });
+      setAttrs(svgEl('grainOverlay'),  { x: cx-r, y: bodyY,          width: r*2, height: segH });
+      setAttrs(svgEl('glossOverlay'),  { x: cx-r, y: bodyY,          width: r*2, height: segH, opacity: f.gloss });
+
+      // Segment 2
+      const show2 = segs >= 2;
+      svgEl('drumBody2').setAttribute('display',     show2 ? '' : 'none');
+      svgEl('grainOverlay2').setAttribute('display', show2 ? '' : 'none');
+      svgEl('glossOverlay2').setAttribute('display', show2 ? '' : 'none');
+      if (show2) {
+        setAttrs(svgEl('drumBody2'),     { x: cx-r, y: bodyY+segH,   width: r*2, height: segH });
+        setAttrs(svgEl('grainOverlay2'), { x: cx-r, y: bodyY+segH,   width: r*2, height: segH });
+        setAttrs(svgEl('glossOverlay2'), { x: cx-r, y: bodyY+segH,   width: r*2, height: segH, opacity: f.gloss });
+      }
+
+      // Segment 3
+      const show3 = segs >= 3;
+      svgEl('drumBody3').setAttribute('display',     show3 ? '' : 'none');
+      svgEl('grainOverlay3').setAttribute('display', show3 ? '' : 'none');
+      svgEl('glossOverlay3').setAttribute('display', show3 ? '' : 'none');
+      if (show3) {
+        setAttrs(svgEl('drumBody3'),     { x: cx-r, y: bodyY+2*segH, width: r*2, height: segH });
+        setAttrs(svgEl('grainOverlay3'), { x: cx-r, y: bodyY+2*segH, width: r*2, height: segH });
+        setAttrs(svgEl('glossOverlay3'), { x: cx-r, y: bodyY+2*segH, width: r*2, height: segH, opacity: f.gloss });
+      }
+
+      // ── Segment divider lines ──
+      const showD1 = segs >= 2;
+      const showD2 = segs >= 3;
+      const div1Y = bodyY + segH;
+      const div2Y = bodyY + 2 * segH;
+      ['segDivider1','segDivHL1'].forEach(id => svgEl(id).setAttribute('display', showD1 ? '' : 'none'));
+      ['segDivider2','segDivHL2'].forEach(id => svgEl(id).setAttribute('display', showD2 ? '' : 'none'));
+      if (showD1) {
+        setAttrs(svgEl('segDivider1'), { x1: cx-r, y1: div1Y,   x2: cx+r, y2: div1Y   });
+        setAttrs(svgEl('segDivHL1'),   { x1: cx-r, y1: div1Y+1, x2: cx+r, y2: div1Y+1 });
+      }
+      if (showD2) {
+        setAttrs(svgEl('segDivider2'), { x1: cx-r, y1: div2Y,   x2: cx+r, y2: div2Y   });
+        setAttrs(svgEl('segDivHL2'),   { x1: cx-r, y1: div2Y+1, x2: cx+r, y2: div2Y+1 });
+      }
+
+      // Side shadows (full height, always on top)
       setAttrs(svgEl('shadowLeft'),  { x: cx - r,      y: bodyY, width: 18, height: h });
       setAttrs(svgEl('shadowRight'), { x: cx + r - 18, y: bodyY, width: 18, height: h });
 
@@ -819,23 +957,44 @@
     }
 
     function updateSummary() {
-      const w = woodData[state.wood];
       const f = finishData[state.finish];
-      svgEl('sumWood').textContent     = w.name;
+      // Wood summary: list all active segments
+      const woodNames = state.woods.slice(0, state.segments).map(k => woodData[k].name);
+      svgEl('sumWood').textContent     = woodNames.join(' + ');
       svgEl('sumDiameter').textContent = state.diameter;
       svgEl('sumDepth').textContent    = state.depth;
       svgEl('sumFinish').textContent   = f.name;
+      // Price: base on most expensive wood in selection
+      const prices = state.woods.slice(0, state.segments).map(k => woodData[k].price).filter(Boolean);
       const priceEl = svgEl('configPrice');
-      priceEl.innerHTML = w.price
-        ? `ab ${w.price} € <small>· unverbindliche Schätzung</small>`
-        : `Auf Anfrage <small>· wir erstellen ein Angebot</small>`;
+      if (prices.length) {
+        priceEl.innerHTML = `ab ${Math.max(...prices)} € <small>· unverbindliche Schätzung</small>`;
+      } else {
+        priceEl.innerHTML = `Auf Anfrage <small>· wir erstellen ein Angebot</small>`;
+      }
     }
 
     // ── EVENT HANDLERS ──
-    function selectWood(btn, wood) {
-      document.querySelectorAll('.wood-btn').forEach(b => b.classList.remove('selected'));
+    function selectSegments(btn, n) {
+      document.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-      state.wood = wood;
+      state.segments = n;
+      // Show/hide segment sections
+      svgEl('seg2Section').classList.toggle('hidden', n < 2);
+      svgEl('seg3Section').classList.toggle('hidden', n < 3);
+      updateDrum();
+      updateSummary();
+    }
+
+    function selectWood(btn, segIndex, wood) {
+      // Deselect others in same grid
+      const grid = svgEl('woodGrid' + segIndex);
+      grid.querySelectorAll('.wood-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      state.woods[segIndex - 1] = wood;
+      // Update dot colour
+      const dot = svgEl('dot' + segIndex);
+      if (dot) dot.style.background = segDotColors[wood] || '#888';
       updateDrum();
       updateSummary();
     }
