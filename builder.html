@@ -849,21 +849,23 @@
         setAttrs(gloss, { d, fill: 'url(#glossOver)', opacity: f.gloss });
         grp.appendChild(gloss);
 
-        // Curved divider arc between segments
+        // Full ellipse ring divider (same style as top/bottom drumhead hoops)
         if (i < segs - 1) {
-          const divY   = bottomY;
-          const dArc   = `M ${cx-r} ${divY} ${arcLR(divY)}`;
-          const dArcHL = `M ${cx-r} ${divY + 1.5} A ${r} ${ry} 0 0 1 ${cx+r} ${divY + 1.5}`;
-          const div    = document.createElementNS(svgNS, 'path');
-          setAttrs(div, { d: dArc, fill: 'none', stroke: 'rgba(0,0,0,0.75)', 'stroke-width': 2.5 });
-          grp.appendChild(div);
-          const divHL = document.createElementNS(svgNS, 'path');
-          setAttrs(divHL, { d: dArcHL, fill: 'none', stroke: 'rgba(255,255,255,0.15)', 'stroke-width': 1 });
-          grp.appendChild(divHL);
+          const divY = bottomY;
+          // Main ring – full ellipse with hoop gradient, matches top/bottom hoops visually
+          const ringEl = document.createElementNS(svgNS, 'ellipse');
+          setAttrs(ringEl, { cx: cx, cy: divY, rx: r, ry: ry,
+                             fill: 'none', stroke: 'url(#hoopGrad)', 'stroke-width': '7' });
+          grp.appendChild(ringEl);
+          // Highlight line on ring
+          const ringHL = document.createElementNS(svgNS, 'ellipse');
+          setAttrs(ringHL, { cx: cx, cy: divY, rx: r, ry: ry,
+                             fill: 'none', stroke: 'rgba(255,255,255,0.2)', 'stroke-width': '1' });
+          grp.appendChild(ringHL);
         }
 
-        // Wood name label centered inside segment (multi-segment only)
-        if (segs > 1) {
+        // Wood name label – only if the segment is tall enough for the label not to overlap the ring arcs
+        if (segs > 1 && segH_each >= 50) {
           const wName   = woodData[state.woods[i]].short;
           const midSegY = topY + segH_each / 2;
           const lblW    = Math.max(wName.length * 5.5 + 8, 24);
