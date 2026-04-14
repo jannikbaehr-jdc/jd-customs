@@ -539,6 +539,14 @@
             <stop offset="40%"  stop-color="white" stop-opacity="0.04"/>
             <stop offset="100%" stop-color="white" stop-opacity="0.0"/>
           </linearGradient>
+
+          <!-- Arrowhead markers for dimension lines -->
+          <marker id="arrowEnd" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+            <path d="M0,0.5 L0,5.5 L5.5,3 z" fill="rgba(245,158,11,0.9)"/>
+          </marker>
+          <marker id="arrowStart" markerWidth="6" markerHeight="6" refX="0.5" refY="3" orient="auto-start-reverse">
+            <path d="M0,0.5 L0,5.5 L5.5,3 z" fill="rgba(245,158,11,0.9)"/>
+          </marker>
         </defs>
 
         <!-- DROP SHADOW -->
@@ -571,6 +579,38 @@
         <ellipse id="topRing2"  cx="120" cy="50" rx="70"  ry="13" fill="none" stroke="rgba(200,200,200,0.15)" stroke-width="1"/>
         <ellipse id="topHoop"   cx="120" cy="50" rx="105" ry="22" fill="none" stroke="url(#hoopGrad)" stroke-width="9"/>
         <ellipse id="topHoopHL" cx="120" cy="50" rx="105" ry="22" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+        <!-- ── DIMENSION: WIDTH (horizontal, above drum) ── -->
+        <g id="dimWidth" opacity="0.9">
+          <!-- extension lines -->
+          <line id="dimW_extL" x1="27"  y1="50" x2="27"  y2="18" stroke="rgba(245,158,11,0.4)" stroke-width="0.8" stroke-dasharray="3,2"/>
+          <line id="dimW_extR" x1="213" y1="50" x2="213" y2="18" stroke="rgba(245,158,11,0.4)" stroke-width="0.8" stroke-dasharray="3,2"/>
+          <!-- dimension arrow line -->
+          <line id="dimW_line" x1="27" y1="14" x2="213" y2="14"
+                stroke="rgba(245,158,11,0.85)" stroke-width="1.2"
+                marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+          <!-- label -->
+          <rect id="dimW_bg" x="100" y="7" width="40" height="13" rx="3" fill="#09090b"/>
+          <text id="dimW_text" x="120" y="14" text-anchor="middle" dominant-baseline="middle"
+                font-family="Space Grotesk, sans-serif" font-size="8.5" font-weight="700"
+                fill="rgba(245,158,11,1)" letter-spacing="0.3">14"</text>
+        </g>
+
+        <!-- ── DIMENSION: DEPTH (vertical, right of drum) ── -->
+        <g id="dimDepth" opacity="0.9">
+          <!-- extension lines -->
+          <line id="dimD_extT" x1="213" y1="50"  x2="232" y2="50"  stroke="rgba(245,158,11,0.4)" stroke-width="0.8" stroke-dasharray="3,2"/>
+          <line id="dimD_extB" x1="213" y1="270" x2="232" y2="270" stroke="rgba(245,158,11,0.4)" stroke-width="0.8" stroke-dasharray="3,2"/>
+          <!-- dimension arrow line -->
+          <line id="dimD_line" x1="228" y1="50" x2="228" y2="270"
+                stroke="rgba(245,158,11,0.85)" stroke-width="1.2"
+                marker-start="url(#arrowStart)" marker-end="url(#arrowEnd)"/>
+          <!-- label bg + text -->
+          <rect id="dimD_bg"   x="219" y="150" width="18" height="30" rx="3" fill="#09090b"/>
+          <text id="dimD_text" x="228" y="160" text-anchor="middle" dominant-baseline="auto"
+                font-family="Space Grotesk, sans-serif" font-size="7.5" font-weight="700"
+                fill="rgba(245,158,11,1)" letter-spacing="0.2">5,5"</text>
+        </g>
 
         <!-- BADGE -->
         <rect  id="badgeRect"  x="88" y="146" width="64" height="28" rx="4" fill="rgba(0,0,0,0.35)"/>
@@ -724,9 +764,58 @@
       svgEl('previewWoodName').textContent = w.preview;
       svgEl('previewSize').textContent = `${state.diameter} × ${state.depth} · ${f.name}`;
 
-      // Adjust SVG viewBox height so tall drums don't clip
+      // ── DIMENSION ANNOTATIONS ──
+      const leftX  = cx - r;
+      const rightX = cx + r;
+      const dimLineY  = 14;           // y of horizontal dimension line
+      const dimLineX  = rightX + 18;  // x of vertical dimension line
+
+      // Width annotation
+      setAttrs(svgEl('dimW_extL'), { x1: leftX,  y1: TOP_Y, x2: leftX,  y2: dimLineY + 4 });
+      setAttrs(svgEl('dimW_extR'), { x1: rightX, y1: TOP_Y, x2: rightX, y2: dimLineY + 4 });
+      setAttrs(svgEl('dimW_line'), { x1: leftX,  y1: dimLineY, x2: rightX, y2: dimLineY });
+      setAttrs(svgEl('dimW_bg'),   { x: cx - 20, y: dimLineY - 7, width: 40 });
+      setAttrs(svgEl('dimW_text'), { x: cx, y: dimLineY });
+      svgEl('dimW_text').textContent = state.diameter;
+
+      // Depth annotation
+      setAttrs(svgEl('dimD_extT'), { x1: rightX, y1: TOP_Y,    x2: dimLineX + 4, y2: TOP_Y    });
+      setAttrs(svgEl('dimD_extB'), { x1: rightX, y1: bottomCY, x2: dimLineX + 4, y2: bottomCY });
+      setAttrs(svgEl('dimD_line'), { x1: dimLineX, y1: TOP_Y,  x2: dimLineX,     y2: bottomCY });
+      const midDepthY = TOP_Y + h / 2;
+      const depthLabel = state.depth;
+      const depthLabelH = depthLabel.length > 3 ? 32 : 26;
+      setAttrs(svgEl('dimD_bg'),   { x: dimLineX - 9, y: midDepthY - depthLabelH / 2, width: 18, height: depthLabelH });
+      setAttrs(svgEl('dimD_text'), { x: dimLineX, y: midDepthY - (depthLabel.length > 3 ? 6 : 4) });
+      // Split depth label across two lines if it has a comma (e.g. "5,5"")
+      const parts = state.depth.replace('"','').split(',');
+      if (parts.length === 2) {
+        svgEl('dimD_text').textContent = parts[0] + ',';
+        let line2 = svgEl('dimD_text2');
+        if (!line2) {
+          line2 = document.createElementNS('http://www.w3.org/2000/svg','text');
+          line2.setAttribute('id','dimD_text2');
+          line2.setAttribute('text-anchor','middle');
+          line2.setAttribute('font-family','Space Grotesk, sans-serif');
+          line2.setAttribute('font-size','7.5');
+          line2.setAttribute('font-weight','700');
+          line2.setAttribute('fill','rgba(245,158,11,1)');
+          line2.setAttribute('letter-spacing','0.2');
+          svgEl('dimDepth').appendChild(line2);
+        }
+        setAttrs(line2, { x: dimLineX, y: midDepthY + 6 });
+        line2.textContent = parts[1] + '"';
+        line2.style.display = '';
+      } else {
+        svgEl('dimD_text').textContent = state.depth;
+        const line2 = svgEl('dimD_text2');
+        if (line2) line2.style.display = 'none';
+      }
+
+      // Widen viewBox to show right-side depth annotation
       const totalH = bottomCY + 50;
-      document.getElementById('drumSvg').setAttribute('viewBox', `0 0 240 ${totalH}`);
+      const totalW = dimLineX + 14;
+      document.getElementById('drumSvg').setAttribute('viewBox', `0 0 ${totalW} ${totalH}`);
     }
 
     function updateSummary() {
