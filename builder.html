@@ -604,32 +604,12 @@
         <!-- DROP SHADOW -->
         <ellipse id="dropShadow" cx="120" cy="330" rx="90" ry="12" fill="rgba(0,0,0,0.5)"/>
 
-        <!-- DRUM BODY (segment 1) -->
-        <rect id="drumBody"      x="15" y="50" width="210" height="220" rx="2" fill="url(#bodyGrad)"/>
-        <!-- DRUM BODY segment 2 (hidden by default) -->
-        <rect id="drumBody2"     x="15" y="50" width="210" height="0"   rx="0" fill="url(#bodyGrad2)" display="none"/>
-        <!-- DRUM BODY segment 3 (hidden by default) -->
-        <rect id="drumBody3"     x="15" y="50" width="210" height="0"   rx="0" fill="url(#bodyGrad3)" display="none"/>
+        <!-- DRUM BODY: built dynamically per segment -->
+        <g id="segmentsGroup"></g>
 
-        <!-- GRAIN overlays per segment -->
-        <rect id="grainOverlay"  x="15" y="50" width="210" height="220" rx="2" fill="url(#grain)"/>
-        <rect id="grainOverlay2" x="15" y="50" width="210" height="0"   rx="0" fill="url(#grain)" display="none"/>
-        <rect id="grainOverlay3" x="15" y="50" width="210" height="0"   rx="0" fill="url(#grain)" display="none"/>
-
-        <!-- GLOSS overlays -->
-        <rect id="glossOverlay"  x="15" y="50" width="210" height="220" rx="2" fill="url(#glossOver)" opacity="0"/>
-        <rect id="glossOverlay2" x="15" y="50" width="210" height="0"   rx="0" fill="url(#glossOver)" opacity="0" display="none"/>
-        <rect id="glossOverlay3" x="15" y="50" width="210" height="0"   rx="0" fill="url(#glossOver)" opacity="0" display="none"/>
-
-        <!-- SEGMENT DIVIDER LINES -->
-        <line id="segDivider1" x1="15" y1="0" x2="225" y2="0" stroke="rgba(0,0,0,0.5)"         stroke-width="2" display="none"/>
-        <line id="segDivider2" x1="15" y1="0" x2="225" y2="0" stroke="rgba(0,0,0,0.5)"         stroke-width="2" display="none"/>
-        <line id="segDivHL1"   x1="15" y1="0" x2="225" y2="0" stroke="rgba(255,255,255,0.12)"  stroke-width="1" display="none"/>
-        <line id="segDivHL2"   x1="15" y1="0" x2="225" y2="0" stroke="rgba(255,255,255,0.12)"  stroke-width="1" display="none"/>
-
-        <!-- SIDE SHADOWS (always on top of body segments) -->
-        <rect id="shadowLeft"  x="15"  y="50" width="18" height="220" rx="2" fill="rgba(0,0,0,0.3)"/>
-        <rect id="shadowRight" x="207" y="50" width="18" height="220" rx="2" fill="rgba(0,0,0,0.25)"/>
+        <!-- SIDE SHADOWS (always on top of body) -->
+        <rect id="shadowLeft"  x="15"  y="50" width="18" height="220" fill="rgba(0,0,0,0.3)"/>
+        <rect id="shadowRight" x="207" y="50" width="18" height="220" fill="rgba(0,0,0,0.25)"/>
 
         <!-- BOTTOM GROUP (translates with depth) -->
         <g id="bottomGroup">
@@ -818,50 +798,89 @@
       const wLast = woodData[state.woods[segs - 1]];
       ['b1','b2','b3'].forEach((id,i) => svgEl(id).setAttribute('stop-color', [wLast.b1,wLast.b2,wLast.b3][i]));
 
-      // ── Segment heights ──
-      const segH = h / segs;
+      // ── Build segments dynamically ──
+      const segH    = h / segs;
+      const gradIds = ['bodyGrad','bodyGrad2','bodyGrad3'];
+      const svgNS   = 'http://www.w3.org/2000/svg';
+      const grp     = svgEl('segmentsGroup');
+      grp.innerHTML = '';   // clear previous
 
-      // Segment 1 (top)
-      setAttrs(svgEl('drumBody'),      { x: cx-r, y: bodyY,          width: r*2, height: segH });
-      setAttrs(svgEl('grainOverlay'),  { x: cx-r, y: bodyY,          width: r*2, height: segH });
-      setAttrs(svgEl('glossOverlay'),  { x: cx-r, y: bodyY,          width: r*2, height: segH, opacity: f.gloss });
+      for (let i = 0; i < segs; i++) {
+        const segY = bodyY + i * segH;
 
-      // Segment 2
-      const show2 = segs >= 2;
-      svgEl('drumBody2').setAttribute('display',     show2 ? '' : 'none');
-      svgEl('grainOverlay2').setAttribute('display', show2 ? '' : 'none');
-      svgEl('glossOverlay2').setAttribute('display', show2 ? '' : 'none');
-      if (show2) {
-        setAttrs(svgEl('drumBody2'),     { x: cx-r, y: bodyY+segH,   width: r*2, height: segH });
-        setAttrs(svgEl('grainOverlay2'), { x: cx-r, y: bodyY+segH,   width: r*2, height: segH });
-        setAttrs(svgEl('glossOverlay2'), { x: cx-r, y: bodyY+segH,   width: r*2, height: segH, opacity: f.gloss });
-      }
+        // Body rect
+        const body = document.createElementNS(svgNS, 'rect');
+        setAttrs(body, { x: cx-r, y: segY, width: r*2, height: segH, fill: `url(#${gradIds[i]})` });
+        grp.appendChild(body);
 
-      // Segment 3
-      const show3 = segs >= 3;
-      svgEl('drumBody3').setAttribute('display',     show3 ? '' : 'none');
-      svgEl('grainOverlay3').setAttribute('display', show3 ? '' : 'none');
-      svgEl('glossOverlay3').setAttribute('display', show3 ? '' : 'none');
-      if (show3) {
-        setAttrs(svgEl('drumBody3'),     { x: cx-r, y: bodyY+2*segH, width: r*2, height: segH });
-        setAttrs(svgEl('grainOverlay3'), { x: cx-r, y: bodyY+2*segH, width: r*2, height: segH });
-        setAttrs(svgEl('glossOverlay3'), { x: cx-r, y: bodyY+2*segH, width: r*2, height: segH, opacity: f.gloss });
-      }
+        // Grain overlay
+        const grain = document.createElementNS(svgNS, 'rect');
+        setAttrs(grain, { x: cx-r, y: segY, width: r*2, height: segH, fill: 'url(#grain)' });
+        grp.appendChild(grain);
 
-      // ── Segment divider lines ──
-      const showD1 = segs >= 2;
-      const showD2 = segs >= 3;
-      const div1Y = bodyY + segH;
-      const div2Y = bodyY + 2 * segH;
-      ['segDivider1','segDivHL1'].forEach(id => svgEl(id).setAttribute('display', showD1 ? '' : 'none'));
-      ['segDivider2','segDivHL2'].forEach(id => svgEl(id).setAttribute('display', showD2 ? '' : 'none'));
-      if (showD1) {
-        setAttrs(svgEl('segDivider1'), { x1: cx-r, y1: div1Y,   x2: cx+r, y2: div1Y   });
-        setAttrs(svgEl('segDivHL1'),   { x1: cx-r, y1: div1Y+1, x2: cx+r, y2: div1Y+1 });
-      }
-      if (showD2) {
-        setAttrs(svgEl('segDivider2'), { x1: cx-r, y1: div2Y,   x2: cx+r, y2: div2Y   });
-        setAttrs(svgEl('segDivHL2'),   { x1: cx-r, y1: div2Y+1, x2: cx+r, y2: div2Y+1 });
+        // Gloss overlay
+        const gloss = document.createElementNS(svgNS, 'rect');
+        setAttrs(gloss, { x: cx-r, y: segY, width: r*2, height: segH, fill: 'url(#glossOver)', opacity: f.gloss });
+        grp.appendChild(gloss);
+
+        // Divider line between segments (not after last)
+        if (i < segs - 1) {
+          const divY = segY + segH;
+          const div = document.createElementNS(svgNS, 'line');
+          setAttrs(div, { x1: cx-r, y1: divY, x2: cx+r, y2: divY,
+                          stroke: 'rgba(0,0,0,0.55)', 'stroke-width': 2.5 });
+          grp.appendChild(div);
+          const divHL = document.createElementNS(svgNS, 'line');
+          setAttrs(divHL, { x1: cx-r, y1: divY+1.5, x2: cx+r, y2: divY+1.5,
+                            stroke: 'rgba(255,255,255,0.13)', 'stroke-width': 1 });
+          grp.appendChild(divHL);
+        }
+
+        // ── Per-segment height annotation (left side) ──
+        const segInches = parseFloat(state.depth.replace(',','.').replace('"','')) / segs;
+        const segLabel  = Number.isInteger(segInches)
+          ? segInches + '"'
+          : segInches.toFixed(1).replace('.',',') + '"';
+
+        const annX    = cx - r - 18;   // x of vertical annotation line
+        const midSegY = segY + segH / 2;
+
+        // extension lines
+        const extT = document.createElementNS(svgNS, 'line');
+        setAttrs(extT, { x1: cx-r-2, y1: segY,        x2: annX-2, y2: segY,
+                         stroke: 'rgba(245,158,11,0.35)', 'stroke-width': 0.8,
+                         'stroke-dasharray': '3,2' });
+        grp.appendChild(extT);
+
+        const extB = document.createElementNS(svgNS, 'line');
+        setAttrs(extB, { x1: cx-r-2, y1: segY+segH,   x2: annX-2, y2: segY+segH,
+                         stroke: 'rgba(245,158,11,0.35)', 'stroke-width': 0.8,
+                         'stroke-dasharray': '3,2' });
+        grp.appendChild(extB);
+
+        // arrow line
+        const arrLine = document.createElementNS(svgNS, 'line');
+        setAttrs(arrLine, { x1: annX, y1: segY+2, x2: annX, y2: segY+segH-2,
+                            stroke: 'rgba(245,158,11,0.8)', 'stroke-width': 1.2,
+                            'marker-start': 'url(#arrowStart)', 'marker-end': 'url(#arrowEnd)' });
+        grp.appendChild(arrLine);
+
+        // label background
+        const labelBg = document.createElementNS(svgNS, 'rect');
+        const lblW = segLabel.length > 3 ? 22 : 18;
+        setAttrs(labelBg, { x: annX - lblW/2, y: midSegY - 7, width: lblW, height: 13,
+                            rx: 3, fill: '#09090b' });
+        grp.appendChild(labelBg);
+
+        // label text
+        const labelTxt = document.createElementNS(svgNS, 'text');
+        setAttrs(labelTxt, { x: annX, y: midSegY + 1, 'text-anchor': 'middle',
+                             'dominant-baseline': 'middle',
+                             'font-family': 'Space Grotesk, sans-serif',
+                             'font-size': '7', 'font-weight': '700',
+                             fill: 'rgba(245,158,11,0.95)', 'letter-spacing': '0.2' });
+        labelTxt.textContent = segLabel;
+        grp.appendChild(labelTxt);
       }
 
       // Side shadows (full height, always on top)
@@ -950,10 +969,13 @@
         if (line2) line2.style.display = 'none';
       }
 
-      // Widen viewBox to show right-side depth annotation
-      const totalH = bottomCY + 50;
-      const totalW = dimLineX + 14;
-      document.getElementById('drumSvg').setAttribute('viewBox', `0 0 ${totalW} ${totalH}`);
+      // ViewBox: leave room for left-side segment annotations + right-side depth annotation
+      const leftAnnX = cx - r - 18;
+      const totalH   = bottomCY + 50;
+      const totalW   = dimLineX + 14;
+      const minX     = leftAnnX - 16;
+      document.getElementById('drumSvg').setAttribute('viewBox',
+        `${minX} 0 ${totalW - minX} ${totalH}`);
     }
 
     function updateSummary() {
